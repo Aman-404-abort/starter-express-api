@@ -58,11 +58,9 @@ const add = [
 ]
 app.get('/', async(req, res) => {
     var data = await axios.get('https://api.hulusport.com/sport-data/matches/?ln=en')
-    console.log(data.data.length)
     var am = data.data
     games = [];
     for (var i = 0; i < am.length; i++) {
-        console.log(leag_ids.indexOf(am.league) != -1, am[i].league)
         if (leag_ids.indexOf(am[i].league) != -1) {
             url = 'https://api.hulusport.com/sport-data/matches/' + am[i].id + '/?ln=en'
             var val = await axios.get(url, false)
@@ -72,10 +70,6 @@ app.get('/', async(req, res) => {
             x.title = data.hom + ' Vs ' + data.awy
             h = data.schedule.split('T')[0].split('-')
             x.date = h[2] + '/' + h[1] + '/' + h[0] + ' ' + data.schedule.split('T')[1].split('+')[0]
-            console.log(data.items.length)
-            if (data.items.length == 1) {
-                console.log(data.league.name)
-            }
             aman = data.items.sort(function(a, b) { return a.bet_group.order - b.bet_group.order })
             var prediction = [];
             aman.forEach(element => {
@@ -101,4 +95,4 @@ app.get('/', async(req, res) => {
 
     return res.status(200).json(leag_games)
 })
-app.listen(process.env.PORT || 3000)
+module.exports = app;
