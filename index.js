@@ -95,4 +95,4 @@ app.get('/', async(req, res) => {
 
     return res.status(200).json(leag_games)
 })
-module.exports = app;
+app.listen(process.env.PORT||3000)
