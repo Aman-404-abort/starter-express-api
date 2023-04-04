@@ -57,13 +57,21 @@ const add = [
     "Double chance & both teams to score",
 ]
 app.get('/', async(req, res) => {
-    var data = await axios.get('https://api.hulusport.com/sport-data/matches/?ln=en')
+    var data = await axios({
+    method: 'get',
+    url: ''https://api.hulusport.com/sport-data/matches/?ln=en',
+    timeout: 60 * 4 * 1000
+  });
     var am = data.data
     games = [];
     for (var i = 0; i < am.length; i++) {
         if (leag_ids.indexOf(am[i].league) != -1) {
             url = 'https://api.hulusport.com/sport-data/matches/' + am[i].id + '/?ln=en'
-            var val = await axios.get(url, false)
+            var val = await axios({
+    method: 'get',
+    url: url,
+    timeout: 60 * 4 * 1000
+  });
             data = val.data
             holder = [];
             var x = {};
